@@ -1,7 +1,6 @@
 package com.example.daumobile;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,14 +100,14 @@ public class ChartFragment extends Fragment {
             ArrayList<Point> listPoint = instancePoint.queryAllData_ArrayList(i);
 
             for (Point point : listPoint) {
-                int diem_lan_1 = point.getDiem_lan_1();
-                int diem_lan_2 = point.getDiem_lan_2();
-                int tin_chi = point.getSo_tin_chi();
+                int diem_lan_1 = point.getDiemLan1();
+                int diem_lan_2 = point.getDiemLan2();
+                int tin_chi = point.getStc();
 
                 tong_tin_chi_hoc_ky += tin_chi;
 
                 int diem_max = Math.max(diem_lan_1, diem_lan_2);
-                tong_diem_hoc_ky += diem_max;
+                tong_diem_hoc_ky += (diem_max * tin_chi);
                 switch (diem_max) {
                     case 4:
                         diem_a++;
@@ -129,8 +128,8 @@ public class ChartFragment extends Fragment {
                 }
             }
 
-            Log.d("LOG_CAL_DIEM_TB", "getData: " + tong_diem_hoc_ky + " -> " + tong_tin_chi_hoc_ky);
             diem_trung_binh_hoc_ky = tong_diem_hoc_ky / (tong_tin_chi_hoc_ky * 1.0);
+            diem_trung_binh_hoc_ky = Math.round(diem_trung_binh_hoc_ky * 100.0) / 100.0;    // làm tròn số
             listChart.add(makeChart(diem_trung_binh_hoc_ky, tin_chi_rot_hoc_ky, tong_tin_chi_hoc_ky, hoc_ky, diem_a, diem_b, diem_c, diem_d, diem_f));
         }
 
@@ -152,21 +151,31 @@ public class ChartFragment extends Fragment {
 
         // add data
         ArrayList<Entry> entries = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();// label
         int idx = 0;
         for (Chart chart : listChart) {
+            labels.add("HK " + (idx + 1));
             entries.add(new Entry(idx++, (float) chart.getDiem_trung_binh()));
         }
 
         LineDataSet dataSet = new LineDataSet(entries, "CPA");
+        dataSet.setCircleColors(ColorTemplate.COLORFUL_COLORS);
         dataSet.setColor(ContextCompat.getColor(getContext(), R.color.DeepPink));
         dataSet.setValueTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
 
         // Controlling X axis
+        ValueFormatter xAxisFormatter = new ValueFormatSimple(labels);
         XAxis xAxis = mLinechart.getXAxis();
+        xAxis.setValueFormatter(xAxisFormatter);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setLabelCount(labels.size(), true);
 
         YAxis yAxisRight = mLinechart.getAxisRight();
+        yAxisRight.setValueFormatter(xAxisFormatter);
         yAxisRight.setEnabled(false);
+        yAxisRight.setCenterAxisLabels(true);
+        yAxisRight.setLabelCount(labels.size(), true);
+
 
         // Setting Data
         LineData data = new LineData(dataSet);
@@ -227,7 +236,7 @@ public class ChartFragment extends Fragment {
         // set description value
         ValueFormatter xAxisFormatter = new ValueFormatSimple(labels);
         XAxis xAxis = mBarbar.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(xAxisFormatter);
 
         // set data

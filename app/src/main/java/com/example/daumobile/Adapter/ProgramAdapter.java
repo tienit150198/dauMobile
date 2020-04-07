@@ -36,11 +36,11 @@ public class ProgramAdapter extends RealmRecyclerViewAdapter<Program, ProgramAda
     public void onBindViewHolder(@NonNull ProgramViewHolder holder, int position) {
         Program program = getItem(position);
 
-        holder.tv_it_program_codeHp.setText(program.getMa_hoc_phan());
-        holder.tv_it_program_nameHp.setText(program.getTen_hoc_phan());
-        holder.tv_it_program_so_tin_chi.setText(String.valueOf(program.getSo_tin_chi() + " tín chỉ"));
+        holder.tv_it_program_codeHp.setText(program.getMaHp());
+        holder.tv_it_program_nameHp.setText(program.getTenHp());
+        holder.tv_it_program_so_tin_chi.setText(program.getStc() + " tín chỉ");
 
-        boolean loai_hoc_phan = program.isLoai_hoc_phan();
+        boolean loai_hoc_phan = program.isLoaiHp();
         if (loai_hoc_phan == true) {
             holder.tv_it_program_typeHp.setText(Constants.PROGRAM_TY_BATBUOC);
         } else {
@@ -48,7 +48,7 @@ public class ProgramAdapter extends RealmRecyclerViewAdapter<Program, ProgramAda
         }
     }
 
-    public class ProgramViewHolder extends RecyclerView.ViewHolder {
+    static class ProgramViewHolder extends RecyclerView.ViewHolder {
         TextView tv_it_program_nameHp;
         TextView tv_it_program_typeHp;
         TextView tv_it_program_so_tin_chi;

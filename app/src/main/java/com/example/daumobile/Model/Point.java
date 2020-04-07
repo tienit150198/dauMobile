@@ -1,82 +1,147 @@
 package com.example.daumobile.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmField;
 
 public class Point extends RealmObject {
     @PrimaryKey
-    private int id_point;
-    private String ma_hoc_phan;
-    private String ten_hoc_phan;
-    private int so_tin_chi;
-    private boolean loai_mon_hoc;
-    private int diem_lan_1;
+    @RealmField(name = "id_point")
+    @SerializedName("id_point")
+    @Expose
+    private int idPoint;
+    @RealmField(name = "ma_hp")
+    @SerializedName("ma_hp")
+    @Expose
+    private String maHp;
+    @RealmField(name = "ten_hp")
+    @SerializedName("ten_hp")
+    @Expose
+    private String tenHp;
+    @RealmField(name = "stc")
+    @SerializedName("stc")
+    @Expose
+    private int stc;
+    @RealmField(name = "loai_mon_hoc")
+    @SerializedName("loai_mon_hoc")
+    @Expose
+    private boolean loaiMonHoc;
+    @RealmField(name = "diem_lan_1")
+    @SerializedName("diem_lan_1")
+    @Expose
+    private int diemLan1;
+    @RealmField(name = "diem_lan_2")
+    @SerializedName("diem_lan_2")
+    @Expose
+    private int diemLan2;
+    @RealmField(name = "hoc_ky")
+    @SerializedName("hoc_ky")
+    @Expose
+    private int hocKy;
+
+    @Ignore
     private String diem_chu_lan_1;
-    private int diem_lan_2;
+    @Ignore
     private String diem_chu_lan_2;
-    private int hoc_ky;
+
     public Point() {
     }
 
-    public Point(int id_point, String ma_hoc_phan, String ten_hoc_phan, int so_tin_chi, boolean loai_mon_hoc, int diem_lan_1, String diem_chu_lan_1, int diem_lan_2, String diem_chu_lan_2, int hoc_ky) {
-        this.id_point = id_point;
-        this.ma_hoc_phan = ma_hoc_phan;
-        this.ten_hoc_phan = ten_hoc_phan;
-        this.so_tin_chi = so_tin_chi;
-        this.loai_mon_hoc = loai_mon_hoc;
-        this.diem_lan_1 = diem_lan_1;
-        this.diem_chu_lan_1 = diem_chu_lan_1;
-        this.diem_lan_2 = diem_lan_2;
-        this.diem_chu_lan_2 = diem_chu_lan_2;
-        this.hoc_ky = hoc_ky;
+    public Point(int idPoint, String maHp, String tenHp, int stc, boolean loaiMonHoc, int diemLan1, int diemLan2, int hocKy) {
+        this.idPoint = idPoint;
+        this.maHp = maHp;
+        this.tenHp = tenHp;
+        this.stc = stc;
+        this.loaiMonHoc = loaiMonHoc;
+        this.diemLan1 = diemLan1;
+        this.diemLan2 = diemLan2;
+        this.hocKy = hocKy;
+
+        this.diem_chu_lan_1 = setDiem(diemLan1);
+        this.diem_chu_lan_1 = setDiem(diemLan2);
     }
 
-    public int getId_point() {
-        return id_point;
+    private String setDiem(int diem_lan_1) {
+        switch (diem_lan_1) {
+            case 4:
+                return "A";
+            case 3:
+                return "B";
+            case 2:
+                return "C";
+            case 1:
+                return "D";
+            default:
+                return "F";
+        }
     }
 
-    public void setId_point(int id_point) {
-        this.id_point = id_point;
+    public int getIdPoint() {
+        return idPoint;
     }
 
-    public String getMa_hoc_phan() {
-        return ma_hoc_phan;
+    public void setIdPoint(int idPoint) {
+        this.idPoint = idPoint;
     }
 
-    public void setMa_hoc_phan(String ma_hoc_phan) {
-        this.ma_hoc_phan = ma_hoc_phan;
+    public String getMaHp() {
+        return maHp;
     }
 
-    public String getTen_hoc_phan() {
-        return ten_hoc_phan;
+    public void setMaHp(String maHp) {
+        this.maHp = maHp;
     }
 
-    public void setTen_hoc_phan(String ten_hoc_phan) {
-        this.ten_hoc_phan = ten_hoc_phan;
+    public String getTenHp() {
+        return tenHp;
     }
 
-    public int getSo_tin_chi() {
-        return so_tin_chi;
+    public void setTenHp(String tenHp) {
+        this.tenHp = tenHp;
     }
 
-    public void setSo_tin_chi(int so_tin_chi) {
-        this.so_tin_chi = so_tin_chi;
+    public int getStc() {
+        return stc;
     }
 
-    public boolean isLoai_mon_hoc() {
-        return loai_mon_hoc;
+    public void setStc(int stc) {
+        this.stc = stc;
     }
 
-    public void setLoai_mon_hoc(boolean loai_mon_hoc) {
-        this.loai_mon_hoc = loai_mon_hoc;
+    public boolean isLoaiMonHoc() {
+        return loaiMonHoc;
     }
 
-    public int getDiem_lan_1() {
-        return diem_lan_1;
+    public void setLoaiMonHoc(boolean loaiMonHoc) {
+        this.loaiMonHoc = loaiMonHoc;
     }
 
-    public void setDiem_lan_1(int diem_lan_1) {
-        this.diem_lan_1 = diem_lan_1;
+    public int getDiemLan1() {
+        return diemLan1;
+    }
+
+    public void setDiemLan1(int diemLan1) {
+        this.diemLan1 = diemLan1;
+    }
+
+    public int getDiemLan2() {
+        return diemLan2;
+    }
+
+    public void setDiemLan2(int diemLan2) {
+        this.diemLan2 = diemLan2;
+    }
+
+    public int getHocKy() {
+        return hocKy;
+    }
+
+    public void setHocKy(int hocKy) {
+        this.hocKy = hocKy;
     }
 
     public String getDiem_chu_lan_1() {
@@ -87,27 +152,11 @@ public class Point extends RealmObject {
         this.diem_chu_lan_1 = diem_chu_lan_1;
     }
 
-    public int getDiem_lan_2() {
-        return diem_lan_2;
-    }
-
-    public void setDiem_lan_2(int diem_lan_2) {
-        this.diem_lan_2 = diem_lan_2;
-    }
-
     public String getDiem_chu_lan_2() {
         return diem_chu_lan_2;
     }
 
     public void setDiem_chu_lan_2(String diem_chu_lan_2) {
         this.diem_chu_lan_2 = diem_chu_lan_2;
-    }
-
-    public int getHoc_ky() {
-        return hoc_ky;
-    }
-
-    public void setHoc_ky(int hoc_ky) {
-        this.hoc_ky = hoc_ky;
     }
 }

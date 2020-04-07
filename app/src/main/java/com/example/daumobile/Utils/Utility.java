@@ -44,4 +44,17 @@ public class Utility {
 
         return tong_diem / (tong_tin_chi * 1.0);
     }
+
+    public int getPositionInWeekArray(ArrayList<Integer> arrayWeek, int currentWeek){
+        int position = -1;
+
+        for(int i = 0 ; i < arrayWeek.size() ; i++){
+            if (arrayWeek.get(i) == currentWeek) {
+                position = i;
+                break;
+            }
+        }
+
+        return position;
+    }
 }

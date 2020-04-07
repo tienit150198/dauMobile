@@ -6,7 +6,6 @@ import android.util.Log;
 import com.example.daumobile.Constant.Constants;
 import com.example.daumobile.Model.Point;
 import com.example.daumobile.Model.Program;
-import com.example.daumobile.Model.Schedule;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 
 public class FileService {
     private static final String TAG = "LOG_FILE";
-
+/*
     public static ArrayList<Point> readPoint(String path) {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), path);
         Log.d(TAG, "readProgram: 1 - " + file.getPath());
@@ -60,7 +59,9 @@ public class FileService {
                 if (Str_loai_mon_hoc.equals(Constants.PROGRAM_TY_BATBUOC)) {
                     loai_mon_hoc = true;
                 }
-                result.add(new Point(id, ma_hoc_phan, ten_hoc_phan, so_tin_chi, loai_mon_hoc, diem_lan_1, diem_chu_lan_1, diem_lan_2, diem_chu_lan_2, hoc_ky));
+                Log.d("LOG_POINT", "(" + ma_hoc_phan + "," + ten_hoc_phan + ", " + so_tin_chi + "," + loai_mon_hoc
+                        + ", " + diem_lan_1 + "," + diem_lan_2 + ")");
+                result.add(new Point(id, ma_hoc_phan, ten_hoc_phan, so_tin_chi, loai_mon_hoc, diem_lan_1, diem_lan_2, hoc_ky));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -69,8 +70,8 @@ public class FileService {
         }
 
         return result;
-    }
-
+    }*/
+/*
     public static ArrayList<Program> readProgram(String path) {
 //        File sdcard = Environment.getExternalStorageDirectory();
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), path);
@@ -103,7 +104,8 @@ public class FileService {
                 }
 
                 int hoc_ky = Integer.parseInt(splits[6].trim());
-
+                Log.d("LOG_HOC_KY", "(" + ten_chuong_trinh_dao_tao + "," + ma_hoc_phan + ", " + ten_hoc_phan + "," + loai_hoc_phan
+                        + ", " + so_tin_chi + "," + hoc_ky + " )");
                 result.add(new Program(id, ten_chuong_trinh_dao_tao, ma_hoc_phan, ten_hoc_phan, loai_hoc_phan, so_tin_chi, hoc_ky));
             }
         } catch (FileNotFoundException e) {
@@ -113,8 +115,8 @@ public class FileService {
         }
 
         return result;
-    }
-
+    }*/
+/*
     public static ArrayList<Schedule> readSchedule(String path) {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), path);
         Log.d(TAG, "readProgram: 1 - " + file.getPath());
@@ -152,7 +154,9 @@ public class FileService {
                 if (str_loai_hoc_phan.equals(Constants.PROGRAM_TY_BATBUOC)) {
                     loai_hoc_phan = true;
                 }
-
+                Log.d("LOG_Schedule", "(" + ma_lop_hp + "," + ten_hoc_phan + ", " + loai_hoc_phan + "," + so_tin_chi
+                        + ", " + lop + "," + so_tiet + ", " + giang_vien + ", " + ngay_hoc + ", " + buoi + ", " + tiet + ", " + phong
+                        + "," + thoi_gian + "," + tuan + ")");
                 result.add(new Schedule(id, ma_lop_hp, ten_hoc_phan, loai_hoc_phan, so_tin_chi, lop, so_tiet, giang_vien, ngay_hoc, buoi, tiet, phong, thoi_gian, tuan));
 
                 id++;
@@ -164,5 +168,5 @@ public class FileService {
         }
 
         return result;
-    }
+    }*/
 }

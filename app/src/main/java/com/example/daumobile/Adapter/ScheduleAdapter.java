@@ -35,10 +35,10 @@ public class ScheduleAdapter extends RealmRecyclerViewAdapter<Schedule, Schedule
     public void onBindViewHolder(@NonNull ScheduleViewHolder holder, int position) {
         Schedule schedule = getItem(position);
 
-        holder.tv_it_program_name_teacher.setText(schedule.getGiang_vien());
-        holder.tv_it_schedule_time.setText(schedule.getThoi_gian());
+        holder.tv_it_program_name_teacher.setText(schedule.getGiangVien());
+        holder.tv_it_schedule_time.setText(schedule.getThoiGian());
         holder.tv_it_program_room.setText(String.valueOf(schedule.getPhong() + ", tiết " + schedule.getTiet()));
-        holder.tv_it_schedule_name.setText(schedule.getTen_hoc_phan());
+        holder.tv_it_schedule_name.setText(schedule.getTenHp());
     }
 
     public class ScheduleViewHolder extends RecyclerView.ViewHolder{

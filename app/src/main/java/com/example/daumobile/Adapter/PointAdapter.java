@@ -19,7 +19,7 @@ import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
 public class PointAdapter extends RealmRecyclerViewAdapter<Point, PointAdapter.PointViewHolder> {
-    Utility instanceUtility;
+    private Utility instanceUtility;
 
     public PointAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<Point> data, boolean autoUpdate) {
         super(context, data, autoUpdate);
@@ -39,14 +39,14 @@ public class PointAdapter extends RealmRecyclerViewAdapter<Point, PointAdapter.P
     public void onBindViewHolder(@NonNull PointViewHolder holder, int position) {
         Point point = getItem(position);
 
-        holder.tv_it_point_stc.setText(String.valueOf(point.getSo_tin_chi() + " tín chỉ"));
-        holder.tv_it_point_name.setText(point.getTen_hoc_phan());
+        holder.tv_it_point_stc.setText(point.getStc() + " tín chỉ");
+        holder.tv_it_point_name.setText(point.getTenHp());
 
-        int id = instanceUtility.getIdImagePoint(point.getDiem_lan_1(), point.getDiem_lan_2());
+        int id = instanceUtility.getIdImagePoint(point.getDiemLan1(), point.getDiemLan2());
         holder.img_it_point.setImageResource(id);
     }
 
-    public class PointViewHolder extends RecyclerView.ViewHolder {
+    static class PointViewHolder extends RecyclerView.ViewHolder {
         TextView tv_it_point_name;
         TextView tv_it_point_stc;
         ImageView img_it_point;

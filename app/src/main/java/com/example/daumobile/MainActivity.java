@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private void configBottomNavigation() {
         mBottomNavigation.setOnNavigationItemSelectedListener(this);
-        mBottomNavigation.setSelectedItemId(R.id.nav_chart);
+//        mBottomNavigation.setSelectedItemId(R.id.nav_chart);
+        mBottomNavigation.setSelectedItemId(R.id.nav_point);
     }
 
     private void initialization() {

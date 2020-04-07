@@ -23,35 +23,24 @@ public class ProgramModify {
     }
 
     public void insertProgram(final Program program) {
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                mRealm.insert(program);
-            }
-        });
+        mRealm.executeTransaction(realm -> mRealm.insert(program));
     }
 
     public void updateProgram(final int id_schedule, final Program program) {
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Program programUpdate = mRealm.where(Program.class).equalTo(Constants.KEY_ID_PROGRAM, id_schedule).findFirst();
-                programUpdate.setLoai_hoc_phan(program.isLoai_hoc_phan());
-                programUpdate.setMa_hoc_phan(program.getMa_hoc_phan());
-                programUpdate.setSo_tin_chi(program.getSo_tin_chi());
-                programUpdate.setTen_chuong_trinh_dao_tao(program.getTen_chuong_trinh_dao_tao());
-                programUpdate.setTen_hoc_phan(program.getTen_hoc_phan());
-            }
+        mRealm.executeTransaction(realm -> {
+            Program programUpdate = mRealm.where(Program.class).equalTo(Constants.KEY_ID_PROGRAM, id_schedule).findFirst();
+            programUpdate.setLoaiHp(program.isLoaiHp());
+            programUpdate.setMaHp(program.getMaHp());
+            programUpdate.setStc(program.getStc());
+            programUpdate.setTenChuongTrinhDaoTao(program.getTenChuongTrinhDaoTao());
+            programUpdate.setTenHp(program.getTenHp());
         });
     }
 
     public void deleteProgram(final int id_schedule) {
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Program scheduleDelete = mRealm.where(Program.class).equalTo(Constants.KEY_ID_SCHEDULE, id_schedule).findFirst();
-                scheduleDelete.deleteFromRealm();
-            }
+        mRealm.executeTransaction(realm -> {
+            Program scheduleDelete = mRealm.where(Program.class).equalTo(Constants.KEY_ID_SCHEDULE, id_schedule).findFirst();
+            scheduleDelete.deleteFromRealm();
         });
     }
 

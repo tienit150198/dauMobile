@@ -9,7 +9,7 @@ public class Constants {
     public static final String KEY_TABLE_NAME_SCHEDULE = "schedule.realm";
     public static final String KEY_TABLE_NAME_PROGRAM = "program.realm";
 
-    public static final String KEY_HOC_KY = "hoc_ky";
+    public static final String KEY_HOC_KY = "hocKy";
     public static final String KEY_TUAN = "tuan";
 
     public static final int KEY_TUAN_MAX = 21;

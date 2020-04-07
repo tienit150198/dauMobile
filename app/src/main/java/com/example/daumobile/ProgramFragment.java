@@ -1,7 +1,6 @@
 package com.example.daumobile;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.daumobile.API.APIClient;
+import com.example.daumobile.API.RequestAPI;
 import com.example.daumobile.Adapter.ProgramAdapter;
 import com.example.daumobile.Constant.Constants;
 import com.example.daumobile.Controller.ProgramModify;
-import com.example.daumobile.Files.FileService;
 import com.example.daumobile.Model.Program;
 
 import java.util.ArrayList;
@@ -26,6 +26,10 @@ import java.util.ArrayList;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -40,7 +44,8 @@ public class ProgramFragment extends Fragment {
     private TextView tv_program_name_semester;
     private ImageView img_program_sub_semester;
     private ImageView img_program_plus_semester;
-    private FileService fileService;
+    private Retrofit mRetrofit;
+    private RequestAPI mCallApi;
 
     private int currentSemester = 1;
 
@@ -65,22 +70,16 @@ public class ProgramFragment extends Fragment {
     }
 
     private void setClick() {
-        img_program_sub_semester.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentSemester > 1) {
-                    changeSemester(false);
-                }
+        img_program_sub_semester.setOnClickListener(v -> {
+            if (currentSemester > 1) {
+                changeSemester(false);
             }
         });
 
-        img_program_plus_semester.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                long _maxSemester = instanceProgram.queryHocKyMax();
-                if (currentSemester < _maxSemester) {
-                    changeSemester(true);
-                }
+        img_program_plus_semester.setOnClickListener(v -> {
+            long _maxSemester = instanceProgram.queryHocKyMax();
+            if (currentSemester < _maxSemester) {
+                changeSemester(true);
             }
         });
     }
@@ -101,8 +100,14 @@ public class ProgramFragment extends Fragment {
     }
 
     private void config() {
+        configRetrofit();
         configRealm();
         configRecyclerview();
+    }
+
+    private void configRetrofit() {
+        mRetrofit = APIClient.getClient();
+        mCallApi = mRetrofit.create(RequestAPI.class);
     }
 
     private void configRecyclerview() {
@@ -131,15 +136,26 @@ public class ProgramFragment extends Fragment {
     }
 
     private void addData() {
-        ArrayList<Program> programs = FileService.readProgram(Constants.PATH_FILE_PROGRAM);
-        for (Program program : programs) {
-            instanceProgram.insertProgram(program);
-        }
+        Call<ArrayList<Program>> call = mCallApi.getProgram();
+        call.enqueue(new Callback<ArrayList<Program>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Program>> call, Response<ArrayList<Program>> response) {
+                ArrayList<Program> programs = response.body();
+                for (Program program : programs) {
+                    instanceProgram.insertProgram(program);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Program>> call, Throwable t) {
+
+            }
+        });
+        mRealmResult = instanceProgram.queryAllData(currentSemester);
     }
 
     private void initialization() {
         mapp();
-        fileService = new FileService();
     }
 
     private void mapp() {
